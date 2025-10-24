@@ -1,1 +1,29 @@
+# Local env and secrets
 .env
+.env.local
+.secrets/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Node
+node_modules/
+apps/web/.next/
+packages/sdk/typescript/node_modules/
+
+# Docker / compose
+docker-compose.*.yml
+
+# Artifacts / build
+artifacts/
+tmp/
+tmp/*
+packages/sdk/
+
+# Logs & editor
+*.log
+.vscode/
+.idea/
