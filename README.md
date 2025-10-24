@@ -1,26 +1,43 @@
-# GridIron Sherlock — SPEC
-Date: 2025-10-24
+# GridIron Sherlock
 
-This SPEC is the canonical reference for the GridIron Sherlock web app.
+**GridIron Sherlock** is a cross-provider, analytics-driven fantasy football companion that links to a user’s league, computes advanced metrics and projections, and optimizes roster decisions with explainable recommendations. Our vision is to help you detect hidden edges faster than your opponents and provide precise, explainable advice.
 
-Contents:
-- 01_ARCHITECTURE.md
-- 02_DATA_MODEL.md
-- 03_PIPELINES.md
-- 04_FEATURE_ENGINEERING.md
-- 05_MODELS_MLOPS.md
-- 06_OPTIMIZER.md
-- 07_API.md
-- 08_INTEGRATIONS.md
-- 09_CACHING_PERFORMANCE.md
-- 10_LIVE_ENGINE.md
-- 11_UI_DATA_CONTRACTS.md
-- 12_TESTING_QUALITY.md
-- 13_SECURITY_COMPLIANCE.md
-- 14_COST_SCALING.md
-- 15_DEPLOY_ENVIRONMENTS.md
-- 16_RUNBOOKS.md
-- 17_ENV_VARS.md
-- 18_ACCEPTANCE_CRITERIA.md
-- 19_ANALYTICS_SPEC.md
-- 20_UI_SPEC.md
+## Core Features
+
+*   **Unified Analytics:** Connects to Yahoo, ESPN, Sleeper, and NFL.com fantasy leagues, unifying data into a single, powerful model.
+*   **Advanced Projections:** Delivers calibrated weekly and rest-of-season (ROS) projections with uncertainty estimates, giving you a true sense of potential outcomes.
+*   **Decision Optimization:**
+    *   **Lineup Optimizer:** Recommends the optimal starting lineup based on your goals, constraints, and risk tolerance.
+    *   **Waiver & Free Agent Recommendations:** Identifies the best players to add to your roster and provides FAAB bidding advice.
+    *   **Trade Analysis:** Evaluates trade proposals for fairness and potential impact on your team's performance.
+*   **Live Game Impact:** Streams live updates during games, showing the real-time impact of plays on your matchup and projections.
+*   **Deep Research Tools:** Provides access to in-depth data and analytics for power users who want to dig deeper.
+
+## Architecture Overview
+
+GridIron Sherlock is built on a modern, scalable, and serverless architecture:
+
+*   **Frontend:** [Next.js](https://nextjs.org/) on [Cloudflare Pages](https://pages.cloudflare.com/)
+*   **Backend:** [FastAPI](https://fastapi.tiangolo.com/) on [Google Cloud Run](https://cloud.google.com/run)
+*   **Database:** [Neon Postgres](https://neon.tech/)
+*   **Cache & Queue:** [Upstash Redis](https://upstash.com/)
+*   **Data & Models:** [Cloudflare R2](https://www.cloudflare.com/products/r2/) for data artifacts and machine learning models.
+*   **Data Source:** Primarily powered by the [nflverse](https://nflverse.nflverse.com/) data.
+
+```mermaid
+flowchart LR
+  UI[Next.js] -->|HTTPS| API[FastAPI /v1]
+  API <-->|Redis| CACHE[(Upstash)]
+  API --> DB[(Neon Postgres)]
+  API --> R2[(Cloudflare R2)]
+  SCH[Cloud Scheduler] --> JOBS[Cloud Run Jobs]
+  JOBS --> DB
+  JO-BS --> R2
+  JOBS --> CACHE
+  EXT[NFLVerse + Fantasy APIs] --> JOBS
+  EXT --> API
+```
+
+## Project Specification
+
+This repository contains the complete design and specification for the GridIron Sherlock application. For a detailed breakdown of the project's architecture, data models, features, and operational plans, please see the documents in the [`/docs`](/docs) directory, starting with the [Overall Specification](docs/GRIDIRON_SHERLOCK_OVERALL_SPEC.md).
