@@ -1,0 +1,26 @@
+{
+  "name": "GridIronSherlock Devcontainer",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+  "features": {
+    "ghcr.io/devcontainers/features/node": { "version": "22" },
+    "ghcr.io/devcontainers/features/python": { "version": "3.11" },
+    "ghcr.io/devcontainers/features/java": { "version": "21" },
+    "ghcr.io/devcontainers/features/r": { "version": "4.4" },
+    "ghcr.io/devcontainers/features/docker-in-docker": {}
+  },
+  "postCreateCommand": "bash -lc 'make setup || true'",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "esbenp.prettier-vscode",
+        "dbaeumer.vscode-eslint",
+        "ms-azuretools.vscode-docker",
+        "redhat.java",
+        "ikuyadeu.r"
+      ]
+    }
+  },
+  "forwardPorts": [3000, 8000, 5432, 6379, 9000, 9001],
+  "remoteUser": "vscode"
+}
