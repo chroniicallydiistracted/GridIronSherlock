@@ -7,7 +7,14 @@ You are the coding agent for the GridIron Sherlock web app. Build the repository
 - Tech targets: Next.js 14 (Cloudflare Pages), FastAPI (Cloud Run), Neon Postgres, Upstash Redis, Cloudflare R2, Google Secret Manager, Google Cloud Scheduler, OR-Tools, R-based ETL for NFLVerse, Python ETL for fantasy providers.
 
 # Objectives
-1) Implement contracts first. 2) Generate SDKs. 3) Stand up API and UI shells that compile. 4) Land ETL jobs with fixtures. 5) Land optimizer service. 6) Wire caching, monitoring, and CI gates. 7) Prove the flow with synthetic league fixtures. 8) Keep costs low.
+1) Implement contracts first. 
+2) Generate SDKs. 
+3) Stand up API and UI shells that compile. 
+4) Land ETL jobs with fixtures.
+5) Land optimizer service.
+6) Wire caching, monitoring, and CI gates.
+7) Prove the flow with synthetic league fixtures.
+8) Keep costs low.
 
 # Ground Rules
 - Spec-first. No endpoints or payloads outside OpenAPI. No undocumented fields.
@@ -192,3 +199,5 @@ You are the coding agent for the GridIron Sherlock web app. Build the repository
 - Where secrets or provider sandboxes are required, stop and open a PR that documents the needed inputs.
 
 Begin with Milestone 1 (Contracts-first). Do not modify SPEC files. Work only under new directories. Report progress via PR descriptions and checklists.
+
+## CHANGELOG ##
