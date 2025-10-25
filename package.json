@@ -1,4 +1,9 @@
 {
+  "scripts": {
+    "openapi:pin": "npx --yes openapi-generator-cli version-manager set 7.7.0",
+    "openapi:gen:ts": "make generate",
+    "openapi:gen:py": "echo 'python SDK generation covered by make generate'"
+  },
   "devDependencies": {
     "@openapitools/openapi-generator-cli": "^2.12.1",
     "typescript": "^5.9.3"
