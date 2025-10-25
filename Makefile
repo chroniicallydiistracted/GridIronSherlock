@@ -22,7 +22,7 @@ LOAD_ENV := set -o allexport; \
 	fi; \
 	set +o allexport;
 
-.PHONY: help openapi setup generate fmt lint type test e2e build migrate seed start dev clean smoke
+.PHONY: help openapi setup generate maybe-generate fmt lint type test api.run e2e build migrate seed start dev clean smoke
 
 help:
 	@printf "\nGridIronSherlock - Makefile targets\n\n"
@@ -36,6 +36,7 @@ help:
 	@printf "  e2e       Run e2e tests (Playwright)\n"
 	@printf "  build     Build web and API artifacts\n"
 	@printf "  migrate   Run DB migrations (alembic)\n"
+	@printf "  api.run   Run the API locally with uvicorn\n"
 	@printf "  seed      Seed DB from db/seed\n"
 	@printf "  dev       Start dev servers (api + web)\n"
 	@printf "  clean     Tear down infra and remove local artifacts\n\n"
@@ -81,7 +82,18 @@ setup:
 ## alias
 openapi: generate
 
+maybe-generate:
+	if [ "$(SKIP_GENERATE)" = "1" ]; then
+		echo "Skipping SDK generation (SKIP_GENERATE=1)"
+	else
+		$(MAKE) generate
+	fi
+
 generate:
+	if [ "$(SKIP_GENERATE)" = "1" ]; then
+		echo "Skipping SDK generation (SKIP_GENERATE=1)"
+		exit 0
+	fi
 	if [ ! -f "$(OPENAPI)" ]; then
 		echo "$(OPENAPI) not found"
 		exit 1
@@ -175,7 +187,7 @@ fmt:
 	fi
 		@echo 'fmt complete'
 
-lint: generate
+lint: maybe-generate
 	if [ -d apps/web ]; then
 		(
 			cd apps/web
@@ -200,7 +212,7 @@ lint: generate
 	fi
 	@echo 'lint complete'
 
-type: generate
+type: maybe-generate
 	if [ -d apps/web ] && [ -f apps/web/tsconfig.json ]; then
 		(
 			cd apps/web
@@ -209,11 +221,11 @@ type: generate
 	fi
 	@echo 'type checks done'
 
-test: generate
+test: maybe-generate
 	echo 'Running backend tests'
 	if [ -d services/api ]; then
-		(
-			cd services/api
+	(
+	cd services/api
 			if command -v pytest >/dev/null 2>&1; then pytest -q --maxfail=1; else echo 'pytest not installed, skipping'; fi
 		)
 	fi
@@ -230,6 +242,10 @@ test: generate
 	fi
 	@echo 'all tests completed'
 
+api.run:
+	@$(LOAD_ENV)
+	cd services/api && uvicorn app.main:app --host 0.0.0.0 --port $${PORT_API:-8000}
+
 e2e:
 	@$(LOAD_ENV)
 	$(COMPOSE) up -d
@@ -244,8 +260,8 @@ e2e:
 build:
 	@$(LOAD_ENV)
 	if [ -d apps/web ]; then
-		(
-			cd apps/web
+	        (
+	                cd apps/web
 			npm run build || true
 		)
 	fi
@@ -255,15 +271,7 @@ build:
 	@echo 'build complete'
 
 migrate:
-	@$(LOAD_ENV)
-	if [ -d services/api/alembic ]; then
-		(
-			cd services/api
-			alembic upgrade head || echo 'alembic not available or failed'
-		)
-	else
-		echo 'no alembic migrations found'
-	fi
+	@echo 'No migrations to apply (stub)'
 
 seed:
 	@$(LOAD_ENV)
@@ -285,11 +293,11 @@ start:
 dev:
 	@$(LOAD_ENV)
 	(
-		cd services/api
-		uvicorn services.api.main:app --reload --host 0.0.0.0 --port $${PORT_API:-8000}
+	        cd services/api
+	        uvicorn app.main:app --reload --host 0.0.0.0 --port $${PORT_API:-8000}
 	) & (
-		cd apps/web
-		npm run dev
+	        cd apps/web
+	        npm run dev
 	) ; wait
 
 clean:
@@ -297,7 +305,7 @@ clean:
 	$(COMPOSE) down -v
 	rm -rf node_modules apps/web/.next services/api/.venv .pytest_cache .coverage artifacts tmp packages/sdk/* || true
 
-smoke: generate
+smoke: maybe-generate
 	@echo '-> ESM import check'
 	node --input-type=module -e "import { Configuration } from './packages/sdk/typescript/dist/index.js'; console.log('esm:', typeof Configuration)"
 	@echo '-> CJS import check'
