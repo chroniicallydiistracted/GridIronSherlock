@@ -6,14 +6,14 @@ COMPOSE_FILE := docker-compose.dev.yml
 COMPOSE := docker compose -f $(COMPOSE_FILE)
 OPENAPI := CONTRACTS/openapi.yaml
 
-## Only source .env when all non-comment, non-empty lines are KEY=VALUE (and no '<...>' placeholders)
+# Only source .env when all non-comment, non-empty lines are KEY=VALUE (and no '<...>' placeholders)
 LOAD_ENV := set -o allexport; \
 	if [ -f .env ]; then \
 		clean=1; \
 		while IFS= read -r line; do \
 			case "$$line" in \
-				''|'#'*) ;; \
-				*'<'*) clean=0 ;; \
+				""|"#"*) ;; \
+				*"<"*) clean=0 ;; \
 				[A-Za-z_]*=*) ;; \
 				*) clean=0 ;; \
 			esac; \
@@ -47,10 +47,10 @@ setup:
 	mkdir -p artifacts tmp ./tmp/r2
 	if [ ! -f .env ] && [ -f .env.example ]; then
 		cp .env.example .env
-		echo 'Copied .env.example -> .env (edit values)'
+		echo "Copied .env.example -> .env (edit values)"
 	fi
 	if [ -d apps/web ]; then
-		echo 'Installing web deps'
+		echo "Installing web deps"
 		(
 			cd apps/web
 			if [ -f package-lock.json ]; then
@@ -63,7 +63,7 @@ setup:
 		)
 	fi
 	if [ -d services/api ]; then
-		echo 'Installing python deps (services/api)'
+		echo "Installing python deps (services/api)"
 		if [ -f services/api/requirements-dev.txt ]; then
 			python3 -m pip install -U pip
 			python3 -m pip install -r services/api/requirements-dev.txt
@@ -74,12 +74,12 @@ setup:
 				python3 -m pip install -e .
 			)
 		else
-			echo 'No python requirements found at services/api'
+			echo "No python requirements found at services/api"
 		fi
 	fi
 	@echo "==> setup complete (edit .env if required)"
 
-## alias
+# alias
 openapi: generate
 
 maybe-generate:
@@ -118,7 +118,6 @@ generate:
 	# Build TypeScript SDK to dist (ESM + CJS shim)
 	if [ -d packages/sdk/typescript ]; then
 		cd packages/sdk/typescript
-		# Ensure package.json exists
 		if [ ! -f package.json ]; then echo '{"name":"@gridiron/sherlock-sdk","version":"0.0.0","type":"module","private":true}' > package.json; fi
 		npm pkg set type=module >/dev/null 2>&1 || true
 		npm pkg set main="dist/index.js" module="dist/index.js" types="dist/index.d.ts" >/dev/null 2>&1 || true
@@ -141,12 +140,10 @@ generate:
 	}
 	EOF
 		npx tsc -p tsconfig.esm.json
-		# Fix ESM extensionless imports to include .js for Node compatibility
 		find dist -type f -name "*.js" -print0 | xargs -0 sed -E -i \
 		  -e "s#(export\\s+\\*\\s+from\\s+['\"](\\.\\.?/[^'\"]+))(\\.js)?(['\"])#\\1.js\\4#g" \
 		  -e "/export\\s+\\*\\s+from/! s#(from\\s+['\"](\\.\\.?/[^'\"]+))(\\.js)?(['\"])#\\1.js\\4#g" \
 		  -e "s#(import\\(\\s*['\"](\\.\\.?/[^'\"]+))(\\.js)?(['\"])#\\1.js\\4#g" || true
-		# CommonJS build (minimal) -> dist/index.cjs
 		cat > tsconfig.cjs.json <<-'EOF'
 	{
 	  "compilerOptions": {
@@ -165,12 +162,11 @@ generate:
 	}
 	EOF
 		npx tsc -p tsconfig.cjs.json
-		# Keep full CommonJS build under dist-cjs and also provide dist/index.cjs entry
 		if [ -f dist-cjs/index.js ]; then cp dist-cjs/index.js dist/index.cjs; fi
 		rm -f tsconfig.esm.json tsconfig.cjs.json
 		cd - >/dev/null
 	fi
-	@echo 'SDKs generated under packages/sdk/ (TypeScript dist built)'
+	@echo "SDKs generated under packages/sdk/ (TypeScript dist built)"
 
 fmt:
 	if [ -d apps/web ]; then
@@ -185,7 +181,7 @@ fmt:
 			command -v black >/dev/null 2>&1 && black . || true
 		)
 	fi
-		@echo 'fmt complete'
+	@echo "fmt complete"
 
 lint: maybe-generate
 	if [ -d apps/web ]; then
@@ -206,11 +202,11 @@ lint: maybe-generate
 			elif command -v flake8 >/dev/null 2>&1; then \
 				flake8 . || true; \
 			else \
-				echo 'no python linter configured'; \
+				echo "no python linter configured"; \
 			fi
 		)
 	fi
-	@echo 'lint complete'
+	@echo "lint complete"
 
 type: maybe-generate
 	if [ -d apps/web ] && [ -f apps/web/tsconfig.json ]; then
@@ -219,28 +215,28 @@ type: maybe-generate
 			(npm run type --silent || true) || (command -v npx >/dev/null 2>&1 && npx tsc --noEmit || true)
 		)
 	fi
-	@echo 'type checks done'
+	@echo "type checks done"
 
 test: maybe-generate
-	echo 'Running backend tests'
+	echo "Running backend tests"
 	if [ -d services/api ]; then
-	(
-	cd services/api
-			if command -v pytest >/dev/null 2>&1; then pytest -q --maxfail=1; else echo 'pytest not installed, skipping'; fi
+		(
+			cd services/api
+			if command -v pytest >/dev/null 2>&1; then pytest -q --maxfail=1; else echo "pytest not installed, skipping"; fi
 		)
 	fi
-	echo 'Running frontend tests'
+	echo "Running frontend tests"
 	if [ -d apps/web ] && [ -f apps/web/package.json ]; then
 		(
 			cd apps/web
-			(npm test --silent || echo 'frontend tests skipped')
+			(npm test --silent || echo "frontend tests skipped")
 		)
 	fi
-	echo 'Running contract tests'
+	echo "Running contract tests"
 	if [ -d tests/contracts ]; then
-		if command -v pytest >/dev/null 2>&1; then pytest -q tests/contracts; else echo 'pytest not installed, skipping contracts'; fi
+		if command -v pytest >/dev/null 2>&1; then pytest -q tests/contracts; else echo "pytest not installed, skipping contracts"; fi
 	fi
-	@echo 'all tests completed'
+	@echo "all tests completed"
 
 api.run:
 	@$(LOAD_ENV)
@@ -260,18 +256,18 @@ e2e:
 build:
 	@$(LOAD_ENV)
 	if [ -d apps/web ]; then
-	        (
-	                cd apps/web
+		(
+			cd apps/web
 			npm run build || true
 		)
 	fi
 	if [ -d services/api ]; then
 		docker build -t gridiron-sherlock-api services/api || true
 	fi
-	@echo 'build complete'
+	@echo "build complete"
 
 migrate:
-	@echo 'No migrations to apply (stub)'
+	@echo "No migrations to apply (stub)"
 
 seed:
 	@$(LOAD_ENV)
@@ -281,23 +277,23 @@ seed:
 			psql "$$DATABASE_URL" -f "$$f" || echo "psql failed for $$f"
 		done
 	else
-		echo 'no db/seed directory'
+		echo "no db/seed directory"
 	fi
 
 start:
 	@$(LOAD_ENV)
 	$(COMPOSE) up -d
 	$(COMPOSE) ps
-	@echo 'infra started (use make dev to run services locally)'
+	@echo "infra started (use make dev to run services locally)"
 
 dev:
 	@$(LOAD_ENV)
 	(
-	        cd services/api
-	        uvicorn app.main:app --reload --host 0.0.0.0 --port $${PORT_API:-8000}
+		cd services/api
+		uvicorn app.main:app --reload --host 0.0.0.0 --port $${PORT_API:-8000}
 	) & (
-	        cd apps/web
-	        npm run dev
+		cd apps/web
+		npm run dev
 	) ; wait
 
 clean:
@@ -306,11 +302,11 @@ clean:
 	rm -rf node_modules apps/web/.next services/api/.venv .pytest_cache .coverage artifacts tmp packages/sdk/* || true
 
 smoke: maybe-generate
-	@echo '-> ESM import check'
+	@echo "-> ESM import check"
 	node --input-type=module -e "import { Configuration } from './packages/sdk/typescript/dist/index.js'; console.log('esm:', typeof Configuration)"
-	@echo '-> CJS import check'
+	@echo "-> CJS import check"
 	node -e "console.log('cjs:', typeof require('./packages/sdk/typescript/dist/index.cjs').Configuration)"
-	@echo '-> Python import check'
+	@echo "-> Python import check"
 	@if command -v python >/dev/null 2>&1; then \
 		PYTHONPATH=packages/sdk/python python -c "import gridiron_sherlock_sdk as s; print('py:', 'ok')"; \
 	else \
