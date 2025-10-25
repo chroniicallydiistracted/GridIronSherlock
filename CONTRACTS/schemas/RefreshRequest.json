@@ -1,0 +1,18 @@
+{
+  "type": "object",
+  "properties": {
+    "leagueId": {
+      "$ref": "#/components/schemas/UUID",
+      "nullable": true
+    },
+    "teamId": {
+      "$ref": "#/components/schemas/UUID",
+      "nullable": true
+    },
+    "force": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "additionalProperties": false
+}

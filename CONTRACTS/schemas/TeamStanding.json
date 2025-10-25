@@ -1,0 +1,33 @@
+{
+  "type": "object",
+  "required": [
+    "team",
+    "rank",
+    "pointsFor",
+    "pointsAgainst"
+  ],
+  "properties": {
+    "team": {
+      "$ref": "#/components/schemas/TeamReference"
+    },
+    "rank": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "pointsFor": {
+      "type": "number"
+    },
+    "pointsAgainst": {
+      "type": "number"
+    },
+    "streak": {
+      "type": "string",
+      "nullable": true
+    },
+    "notes": {
+      "type": "string",
+      "nullable": true
+    }
+  },
+  "additionalProperties": false
+}

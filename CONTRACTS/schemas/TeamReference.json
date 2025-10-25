@@ -1,0 +1,54 @@
+{
+  "type": "object",
+  "required": [
+    "teamId",
+    "leagueId",
+    "name"
+  ],
+  "properties": {
+    "teamId": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "leagueId": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "name": {
+      "type": "string"
+    },
+    "abbreviation": {
+      "type": "string",
+      "nullable": true
+    },
+    "manager": {
+      "type": "string",
+      "nullable": true
+    },
+    "record": {
+      "type": "object",
+      "required": [
+        "wins",
+        "losses",
+        "ties"
+      ],
+      "properties": {
+        "wins": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "losses": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "ties": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "additionalProperties": false,
+      "nullable": true
+    }
+  },
+  "additionalProperties": false
+}

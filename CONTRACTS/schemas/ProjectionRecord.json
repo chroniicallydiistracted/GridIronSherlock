@@ -1,0 +1,68 @@
+{
+  "type": "object",
+  "required": [
+    "player",
+    "period",
+    "projection"
+  ],
+  "properties": {
+    "player": {
+      "$ref": "#/components/schemas/PlayerSummary"
+    },
+    "period": {
+      "$ref": "#/components/schemas/ScoringPeriod"
+    },
+    "leagueId": {
+      "$ref": "#/components/schemas/UUID",
+      "nullable": true
+    },
+    "projection": {
+      "$ref": "#/components/schemas/ProjectionSummary"
+    },
+    "opponent": {
+      "type": "object",
+      "properties": {
+        "team": {
+          "type": "string"
+        },
+        "home": {
+          "type": "boolean"
+        },
+        "impliedTotal": {
+          "type": "number",
+          "nullable": true
+        },
+        "paceRank": {
+          "type": "integer",
+          "nullable": true
+        }
+      },
+      "additionalProperties": false,
+      "nullable": true
+    },
+    "usage": {
+      "type": "object",
+      "properties": {
+        "snapShare": {
+          "type": "number",
+          "nullable": true
+        },
+        "routeShare": {
+          "type": "number",
+          "nullable": true
+        },
+        "targetShare": {
+          "type": "number",
+          "nullable": true
+        },
+        "rushShare": {
+          "type": "number",
+          "nullable": true
+        }
+      },
+      "additionalProperties": false,
+      "nullable": true
+    }
+  },
+  "additionalProperties": false
+}

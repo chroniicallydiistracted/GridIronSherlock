@@ -1,0 +1,58 @@
+{
+  "type": "object",
+  "required": [
+    "fairnessScore",
+    "recommendedAction",
+    "teamImpacts",
+    "provenance"
+  ],
+  "properties": {
+    "fairnessScore": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "recommendedAction": {
+      "type": "string",
+      "enum": [
+        "proceed",
+        "counter",
+        "decline"
+      ]
+    },
+    "summary": {
+      "type": "string",
+      "nullable": true
+    },
+    "teamImpacts": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/TradeImpact"
+      }
+    },
+    "replacementImpact": {
+      "type": "object",
+      "properties": {
+        "teamId": {
+          "$ref": "#/components/schemas/UUID"
+        },
+        "delta": {
+          "type": "number",
+          "nullable": true
+        }
+      },
+      "additionalProperties": false,
+      "nullable": true
+    },
+    "warnings": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "provenance": {
+      "$ref": "#/components/schemas/Provenance"
+    }
+  },
+  "additionalProperties": false
+}

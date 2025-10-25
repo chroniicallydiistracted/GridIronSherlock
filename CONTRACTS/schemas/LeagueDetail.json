@@ -1,0 +1,81 @@
+{
+  "type": "object",
+  "required": [
+    "league",
+    "teams",
+    "scoring"
+  ],
+  "properties": {
+    "league": {
+      "$ref": "#/components/schemas/LeagueSummary"
+    },
+    "teams": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/TeamReference"
+      }
+    },
+    "standings": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/TeamStanding"
+      },
+      "nullable": true
+    },
+    "scoring": {
+      "type": "object",
+      "required": [
+        "type",
+        "ppr"
+      ],
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "ppr": {
+          "type": "number"
+        },
+        "bonusRules": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "rosterSettings": {
+      "type": "object",
+      "required": [
+        "slots",
+        "benchSlots"
+      ],
+      "properties": {
+        "slots": {
+          "type": "array",
+          "items": {
+            "$ref": "#/components/schemas/RosterSlotRule"
+          }
+        },
+        "benchSlots": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "irSlots": {
+          "type": "integer",
+          "minimum": 0,
+          "nullable": true
+        },
+        "notes": {
+          "type": "string",
+          "nullable": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "provenance": {
+      "$ref": "#/components/schemas/Provenance"
+    }
+  },
+  "additionalProperties": false
+}

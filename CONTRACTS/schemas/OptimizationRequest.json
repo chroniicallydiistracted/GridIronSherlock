@@ -1,0 +1,39 @@
+{
+  "type": "object",
+  "required": [
+    "period",
+    "objective"
+  ],
+  "properties": {
+    "period": {
+      "$ref": "#/components/schemas/ScoringPeriod"
+    },
+    "objective": {
+      "$ref": "#/components/schemas/OptimizationObjective"
+    },
+    "constraints": {
+      "$ref": "#/components/schemas/OptimizationConstraints",
+      "nullable": true
+    },
+    "context": {
+      "type": "object",
+      "properties": {
+        "includeWaivers": {
+          "type": "boolean",
+          "default": false
+        },
+        "includeTrades": {
+          "type": "boolean",
+          "default": false
+        },
+        "notes": {
+          "type": "string",
+          "nullable": true
+        }
+      },
+      "additionalProperties": false,
+      "nullable": true
+    }
+  },
+  "additionalProperties": false
+}

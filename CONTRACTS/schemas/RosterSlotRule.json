@@ -1,0 +1,17 @@
+{
+  "type": "object",
+  "required": [
+    "slot",
+    "count"
+  ],
+  "properties": {
+    "slot": {
+      "type": "string"
+    },
+    "count": {
+      "type": "integer",
+      "minimum": 0
+    }
+  },
+  "additionalProperties": false
+}

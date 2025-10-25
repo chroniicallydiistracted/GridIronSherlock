@@ -1,0 +1,65 @@
+{
+  "type": "object",
+  "required": [
+    "userId",
+    "email",
+    "createdAt",
+    "accounts",
+    "activeLeagueIds"
+  ],
+  "properties": {
+    "userId": {
+      "$ref": "#/components/schemas/UUID"
+    },
+    "email": {
+      "type": "string",
+      "format": "email"
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "displayName": {
+      "type": "string",
+      "nullable": true
+    },
+    "accounts": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/LinkedAccount"
+      }
+    },
+    "activeLeagueIds": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/UUID"
+      }
+    },
+    "preferences": {
+      "type": "object",
+      "properties": {
+        "defaultLeagueId": {
+          "$ref": "#/components/schemas/UUID",
+          "nullable": true
+        },
+        "defaultView": {
+          "type": "string",
+          "nullable": true
+        },
+        "notificationOptIn": {
+          "type": "boolean",
+          "nullable": true
+        }
+      },
+      "additionalProperties": false,
+      "nullable": true
+    },
+    "featureFlags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "additionalProperties": false
+}

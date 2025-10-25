@@ -1,0 +1,14 @@
+{
+  "type": "string",
+  "enum": [
+    "leagues",
+    "teams",
+    "lineups",
+    "projections",
+    "waivers",
+    "trades",
+    "players",
+    "live"
+  ],
+  "description": "Refresh scope identifier."
+}

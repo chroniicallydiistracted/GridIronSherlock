@@ -1,0 +1,51 @@
+{
+  "type": "object",
+  "required": [
+    "leagueId",
+    "provider",
+    "name",
+    "season"
+  ],
+  "properties": {
+    "leagueId": {
+      "$ref": "#/components/schemas/UUID"
+    },
+    "provider": {
+      "$ref": "#/components/schemas/ProviderId"
+    },
+    "name": {
+      "type": "string"
+    },
+    "season": {
+      "type": "integer"
+    },
+    "format": {
+      "type": "string",
+      "nullable": true
+    },
+    "avatarUrl": {
+      "type": "string",
+      "format": "uri",
+      "nullable": true
+    },
+    "lastSyncAt": {
+      "type": "string",
+      "format": "date-time",
+      "nullable": true
+    },
+    "teams": {
+      "type": "integer",
+      "nullable": true
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "preseason",
+        "in-season",
+        "completed"
+      ],
+      "nullable": true
+    }
+  },
+  "additionalProperties": false
+}

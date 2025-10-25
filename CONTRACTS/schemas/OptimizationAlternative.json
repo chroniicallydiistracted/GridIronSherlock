@@ -1,0 +1,50 @@
+{
+  "type": "object",
+  "required": [
+    "rank",
+    "projectedPoints",
+    "lineup"
+  ],
+  "properties": {
+    "rank": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "projectedPoints": {
+      "type": "number"
+    },
+    "deltaFromBest": {
+      "type": "number"
+    },
+    "lineup": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/OptimizationSlot"
+      }
+    },
+    "changes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "slot",
+          "inPlayerId",
+          "outPlayerId"
+        ],
+        "properties": {
+          "slot": {
+            "type": "string"
+          },
+          "inPlayerId": {
+            "$ref": "#/components/schemas/UUID"
+          },
+          "outPlayerId": {
+            "$ref": "#/components/schemas/UUID"
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

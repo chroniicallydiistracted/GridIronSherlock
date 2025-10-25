@@ -1,0 +1,45 @@
+{
+  "type": "object",
+  "required": [
+    "player",
+    "metrics",
+    "projections"
+  ],
+  "properties": {
+    "player": {
+      "$ref": "#/components/schemas/PlayerSummary"
+    },
+    "metrics": {
+      "$ref": "#/components/schemas/PlayerMetrics"
+    },
+    "projections": {
+      "type": "object",
+      "required": [
+        "weekly"
+      ],
+      "properties": {
+        "weekly": {
+          "$ref": "#/components/schemas/ProjectionSummary"
+        },
+        "ros": {
+          "$ref": "#/components/schemas/ProjectionSummary",
+          "nullable": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "recentGames": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/RecentGame"
+      }
+    },
+    "insights": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "additionalProperties": false
+}

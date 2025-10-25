@@ -1,0 +1,33 @@
+{
+  "type": "object",
+  "required": [
+    "focus"
+  ],
+  "properties": {
+    "focus": {
+      "type": "string",
+      "enum": [
+        "balanced",
+        "ceiling",
+        "floor"
+      ]
+    },
+    "ceilingWeight": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "default": 0.5
+    },
+    "variancePenalty": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "default": 0.25
+    },
+    "notes": {
+      "type": "string",
+      "nullable": true
+    }
+  },
+  "additionalProperties": false
+}

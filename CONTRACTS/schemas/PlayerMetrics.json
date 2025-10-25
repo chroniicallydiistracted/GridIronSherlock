@@ -1,0 +1,89 @@
+{
+  "type": "object",
+  "required": [
+    "season",
+    "week"
+  ],
+  "properties": {
+    "season": {
+      "type": "integer"
+    },
+    "week": {
+      "type": "integer"
+    },
+    "usage": {
+      "type": "object",
+      "properties": {
+        "snapShare": {
+          "type": "number",
+          "nullable": true
+        },
+        "routeShare": {
+          "type": "number",
+          "nullable": true
+        },
+        "targetShare": {
+          "type": "number",
+          "nullable": true
+        },
+        "rushShare": {
+          "type": "number",
+          "nullable": true
+        },
+        "redZoneTouchShare": {
+          "type": "number",
+          "nullable": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "efficiency": {
+      "type": "object",
+      "properties": {
+        "yprr": {
+          "type": "number",
+          "nullable": true
+        },
+        "adot": {
+          "type": "number",
+          "nullable": true
+        },
+        "epaPerTarget": {
+          "type": "number",
+          "nullable": true
+        },
+        "epaPerRush": {
+          "type": "number",
+          "nullable": true
+        },
+        "successRate": {
+          "type": "number",
+          "nullable": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "context": {
+      "type": "object",
+      "properties": {
+        "paceRank": {
+          "type": "integer",
+          "nullable": true
+        },
+        "proe": {
+          "type": "number",
+          "nullable": true
+        },
+        "matchupDifficulty": {
+          "type": "string",
+          "nullable": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "provenance": {
+      "$ref": "#/components/schemas/Provenance"
+    }
+  },
+  "additionalProperties": false
+}

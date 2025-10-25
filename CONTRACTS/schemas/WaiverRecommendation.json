@@ -1,0 +1,56 @@
+{
+  "type": "object",
+  "required": [
+    "player",
+    "projectedPoints",
+    "faab",
+    "priority",
+    "recommendedAction"
+  ],
+  "properties": {
+    "player": {
+      "$ref": "#/components/schemas/PlayerSummary"
+    },
+    "projectedPoints": {
+      "type": "number"
+    },
+    "faab": {
+      "$ref": "#/components/schemas/FAABRange"
+    },
+    "priority": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "recommendedAction": {
+      "type": "string",
+      "enum": [
+        "add",
+        "monitor",
+        "avoid"
+      ]
+    },
+    "reason": {
+      "type": "string",
+      "nullable": true
+    },
+    "replacementComparison": {
+      "type": "object",
+      "properties": {
+        "dropPlayerId": {
+          "$ref": "#/components/schemas/UUID",
+          "nullable": true
+        },
+        "deltaPoints": {
+          "type": "number",
+          "nullable": true
+        }
+      },
+      "additionalProperties": false,
+      "nullable": true
+    },
+    "provenance": {
+      "$ref": "#/components/schemas/Provenance"
+    }
+  },
+  "additionalProperties": false
+}

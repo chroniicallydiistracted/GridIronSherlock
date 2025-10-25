@@ -1,0 +1,32 @@
+{
+  "type": "object",
+  "required": [
+    "season",
+    "week",
+    "opponent"
+  ],
+  "properties": {
+    "season": {
+      "type": "integer"
+    },
+    "week": {
+      "type": "integer"
+    },
+    "opponent": {
+      "type": "string"
+    },
+    "fantasyPoints": {
+      "type": "number",
+      "nullable": true
+    },
+    "snapShare": {
+      "type": "number",
+      "nullable": true
+    },
+    "notes": {
+      "type": "string",
+      "nullable": true
+    }
+  },
+  "additionalProperties": false
+}

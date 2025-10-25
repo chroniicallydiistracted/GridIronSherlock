@@ -1,0 +1,50 @@
+{
+  "type": "object",
+  "required": [
+    "runId",
+    "submittedAt",
+    "objective",
+    "resultLineup",
+    "bench"
+  ],
+  "properties": {
+    "runId": {
+      "$ref": "#/components/schemas/UUID"
+    },
+    "submittedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "objective": {
+      "$ref": "#/components/schemas/OptimizationObjective"
+    },
+    "resultLineup": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/OptimizationSlot"
+      }
+    },
+    "bench": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/OptimizationSlot"
+      }
+    },
+    "alternatives": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/OptimizationAlternative"
+      }
+    },
+    "insights": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "provenance": {
+      "$ref": "#/components/schemas/Provenance"
+    }
+  },
+  "additionalProperties": false
+}

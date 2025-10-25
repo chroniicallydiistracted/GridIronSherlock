@@ -1,0 +1,47 @@
+{
+  "type": "object",
+  "required": [
+    "teamId",
+    "projectedDelta"
+  ],
+  "properties": {
+    "teamId": {
+      "$ref": "#/components/schemas/UUID"
+    },
+    "projectedDelta": {
+      "type": "number"
+    },
+    "riskDelta": {
+      "type": "number",
+      "nullable": true
+    },
+    "lineupChanges": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "slot",
+          "inPlayerId",
+          "outPlayerId"
+        ],
+        "properties": {
+          "slot": {
+            "type": "string"
+          },
+          "inPlayerId": {
+            "$ref": "#/components/schemas/UUID"
+          },
+          "outPlayerId": {
+            "$ref": "#/components/schemas/UUID"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "notes": {
+      "type": "string",
+      "nullable": true
+    }
+  },
+  "additionalProperties": false
+}

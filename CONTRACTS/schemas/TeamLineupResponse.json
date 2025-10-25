@@ -1,0 +1,40 @@
+{
+  "type": "object",
+  "required": [
+    "team",
+    "period",
+    "lineup",
+    "bench"
+  ],
+  "properties": {
+    "team": {
+      "$ref": "#/components/schemas/TeamReference"
+    },
+    "period": {
+      "$ref": "#/components/schemas/ScoringPeriod"
+    },
+    "lineup": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/LineupSlot"
+      }
+    },
+    "bench": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/LineupSlot"
+      }
+    },
+    "totalProjected": {
+      "type": "number"
+    },
+    "totalActual": {
+      "type": "number",
+      "nullable": true
+    },
+    "provenance": {
+      "$ref": "#/components/schemas/Provenance"
+    }
+  },
+  "additionalProperties": false
+}

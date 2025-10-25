@@ -1,0 +1,47 @@
+{
+  "type": "object",
+  "required": [
+    "meanPoints",
+    "p20",
+    "p50",
+    "p80",
+    "boomProbability",
+    "bustProbability"
+  ],
+  "properties": {
+    "meanPoints": {
+      "type": "number"
+    },
+    "p20": {
+      "type": "number"
+    },
+    "p50": {
+      "type": "number"
+    },
+    "p80": {
+      "type": "number"
+    },
+    "boomProbability": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "bustProbability": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "floorPoints": {
+      "type": "number",
+      "nullable": true
+    },
+    "ceilingPoints": {
+      "type": "number",
+      "nullable": true
+    },
+    "provenance": {
+      "$ref": "#/components/schemas/Provenance"
+    }
+  },
+  "additionalProperties": false
+}

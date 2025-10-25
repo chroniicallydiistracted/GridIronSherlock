@@ -1,0 +1,50 @@
+{
+  "type": "object",
+  "properties": {
+    "lockedPlayers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "slot",
+          "playerId"
+        ],
+        "properties": {
+          "slot": {
+            "type": "string"
+          },
+          "playerId": {
+            "$ref": "#/components/schemas/UUID"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "excludedPlayerIds": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/UUID"
+      }
+    },
+    "maxPlayersPerTeam": {
+      "type": "integer",
+      "minimum": 1,
+      "nullable": true
+    },
+    "riskTolerance": {
+      "type": "string",
+      "enum": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "default": "medium"
+    },
+    "benchDepth": {
+      "type": "integer",
+      "minimum": 0,
+      "nullable": true
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,5 @@
+{
+  "type": "string",
+  "format": "uuid",
+  "description": "Canonical UUID identifier."
+}
