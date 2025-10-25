@@ -43,39 +43,24 @@ help:
 
 setup:
 	@echo "==> setup: creating dirs and preparing workspace"
-	@$(LOAD_ENV)
-	mkdir -p artifacts tmp ./tmp/r2
-	if [ ! -f .env ] && [ -f .env.example ]; then
-		cp .env.example .env
-		echo "Copied .env.example -> .env (edit values)"
+	@mkdir -p artifacts tmp ./tmp/r2
+	@[ -f .env ] || { [ -f .env.example ] && cp .env.example .env && echo "Copied .env.example -> .env (edit values)"; true; }
+	@if [ -d apps/web ]; then \
+		echo "Installing web deps"; \
+		cd apps/web; \
+		if [ -f package-lock.json ]; then npm ci; \
+		elif [ -f yarn.lock ]; then yarn install; \
+		else npm install; fi; \
 	fi
-	if [ -d apps/web ]; then
-		echo "Installing web deps"
-		(
-			cd apps/web
-			if [ -f package-lock.json ]; then
-				npm ci
-			elif [ -f yarn.lock ]; then
-				yarn install
-			else
-				npm install
-			fi
-		)
-	fi
-	if [ -d services/api ]; then
-		echo "Installing python deps (services/api)"
-		if [ -f services/api/requirements-dev.txt ]; then
-			python3 -m pip install -U pip
-			python3 -m pip install -r services/api/requirements-dev.txt
-		elif [ -f services/api/pyproject.toml ]; then
-			python3 -m pip install -U pip
-			(
-				cd services/api
-				python3 -m pip install -e .
-			)
-		else
-			echo "No python requirements found at services/api"
-		fi
+	@if [ -d services/api ]; then \
+		echo "Installing python deps (services/api)"; \
+		if [ -f services/api/requirements-dev.txt ]; then \
+			python3 -m pip install -U pip && python3 -m pip install -r services/api/requirements-dev.txt; \
+		elif [ -f services/api/pyproject.toml ]; then \
+			python3 -m pip install -U pip && (cd services/api && python3 -m pip install -e .); \
+		else \
+			echo "No python requirements found at services/api"; \
+		fi; \
 	fi
 	@echo "==> setup complete (edit .env if required)"
 
