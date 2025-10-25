@@ -1,0 +1,49 @@
+{
+  "type": "object",
+  "required": [
+    "playerId",
+    "fullName",
+    "position",
+    "team"
+  ],
+  "properties": {
+    "playerId": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "gsisId": {
+      "type": "string",
+      "nullable": true
+    },
+    "fullName": {
+      "type": "string"
+    },
+    "position": {
+      "type": "string"
+    },
+    "team": {
+      "type": "string",
+      "nullable": true
+    },
+    "byeWeek": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 18,
+      "nullable": true
+    },
+    "age": {
+      "type": "integer",
+      "minimum": 18,
+      "nullable": true
+    },
+    "injury": {
+      "$ref": "#/components/schemas/InjuryStatus",
+      "nullable": true
+    },
+    "provenance": {
+      "$ref": "#/components/schemas/Provenance",
+      "nullable": true
+    }
+  },
+  "additionalProperties": false
+}

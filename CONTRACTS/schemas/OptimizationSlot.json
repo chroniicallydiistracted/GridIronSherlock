@@ -1,0 +1,28 @@
+{
+  "type": "object",
+  "required": [
+    "slot",
+    "player",
+    "projection"
+  ],
+  "properties": {
+    "slot": {
+      "type": "string"
+    },
+    "player": {
+      "$ref": "#/components/schemas/PlayerSummary"
+    },
+    "projection": {
+      "$ref": "#/components/schemas/ProjectionSummary"
+    },
+    "delta": {
+      "type": "number",
+      "nullable": true
+    },
+    "reason": {
+      "type": "string",
+      "nullable": true
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,34 @@
+{
+  "type": "object",
+  "required": [
+    "provider",
+    "status"
+  ],
+  "properties": {
+    "provider": {
+      "$ref": "#/components/schemas/ProviderId"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "linked",
+        "pending",
+        "error"
+      ]
+    },
+    "linkedAccount": {
+      "$ref": "#/components/schemas/LinkedAccount",
+      "nullable": true
+    },
+    "redirect": {
+      "type": "string",
+      "format": "uri",
+      "nullable": true
+    },
+    "message": {
+      "type": "string",
+      "nullable": true
+    }
+  },
+  "additionalProperties": false
+}

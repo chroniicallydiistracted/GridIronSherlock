@@ -1,0 +1,29 @@
+{
+  "type": "object",
+  "required": [
+    "type",
+    "id",
+    "teamId"
+  ],
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "player",
+        "pick",
+        "fab"
+      ]
+    },
+    "id": {
+      "type": "string"
+    },
+    "teamId": {
+      "$ref": "#/components/schemas/UUID"
+    },
+    "description": {
+      "type": "string",
+      "nullable": true
+    }
+  },
+  "additionalProperties": false
+}

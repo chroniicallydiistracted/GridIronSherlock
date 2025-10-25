@@ -1,0 +1,40 @@
+{
+  "type": "object",
+  "required": [
+    "scope",
+    "status",
+    "enqueuedAt"
+  ],
+  "properties": {
+    "scope": {
+      "$ref": "#/components/schemas/ScopeId"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "queued",
+        "in-progress",
+        "skipped"
+      ]
+    },
+    "enqueuedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "estimatedCompletion": {
+      "type": "string",
+      "format": "date-time",
+      "nullable": true
+    },
+    "context": {
+      "type": "object",
+      "additionalProperties": true,
+      "nullable": true
+    },
+    "provenance": {
+      "$ref": "#/components/schemas/Provenance",
+      "nullable": true
+    }
+  },
+  "additionalProperties": false
+}

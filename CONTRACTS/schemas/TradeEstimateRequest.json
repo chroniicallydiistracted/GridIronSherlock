@@ -1,0 +1,45 @@
+{
+  "type": "object",
+  "required": [
+    "leagueId",
+    "fromTeamId",
+    "toTeamId",
+    "offer",
+    "request"
+  ],
+  "properties": {
+    "leagueId": {
+      "$ref": "#/components/schemas/UUID"
+    },
+    "period": {
+      "$ref": "#/components/schemas/ScoringPeriod"
+    },
+    "fromTeamId": {
+      "$ref": "#/components/schemas/UUID"
+    },
+    "toTeamId": {
+      "$ref": "#/components/schemas/UUID"
+    },
+    "offer": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/TradeAsset"
+      }
+    },
+    "request": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/TradeAsset"
+      }
+    },
+    "allowCounter": {
+      "type": "boolean",
+      "default": true
+    },
+    "includeWaiverAlternatives": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "additionalProperties": false
+}

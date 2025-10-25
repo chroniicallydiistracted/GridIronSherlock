@@ -1,0 +1,45 @@
+{
+  "type": "object",
+  "required": [
+    "provider",
+    "authorizationUrl",
+    "state",
+    "expiresAt"
+  ],
+  "properties": {
+    "provider": {
+      "$ref": "#/components/schemas/ProviderId"
+    },
+    "authorizationUrl": {
+      "type": "string",
+      "format": "uri"
+    },
+    "state": {
+      "type": "string"
+    },
+    "expiresAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "pkce": {
+      "type": "object",
+      "required": [
+        "codeChallenge",
+        "codeChallengeMethod"
+      ],
+      "properties": {
+        "codeChallenge": {
+          "type": "string"
+        },
+        "codeChallengeMethod": {
+          "type": "string",
+          "enum": [
+            "S256"
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

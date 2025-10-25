@@ -1,0 +1,33 @@
+{
+  "type": "object",
+  "required": [
+    "status",
+    "updatedAt"
+  ],
+  "properties": {
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "questionable",
+        "doubtful",
+        "out",
+        "ir",
+        "suspended"
+      ]
+    },
+    "designation": {
+      "type": "string",
+      "nullable": true
+    },
+    "updatedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "notes": {
+      "type": "string",
+      "nullable": true
+    }
+  },
+  "additionalProperties": false
+}

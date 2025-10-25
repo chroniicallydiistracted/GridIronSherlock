@@ -1,0 +1,89 @@
+{
+  "type": "object",
+  "required": [
+    "eventId",
+    "gameId",
+    "playId",
+    "occurredAt",
+    "headline",
+    "impactType",
+    "fantasyImplications"
+  ],
+  "properties": {
+    "eventId": {
+      "type": "string"
+    },
+    "gameId": {
+      "type": "string"
+    },
+    "playId": {
+      "type": "integer"
+    },
+    "occurredAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "headline": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string",
+      "nullable": true
+    },
+    "impactType": {
+      "type": "string",
+      "enum": [
+        "touchdown",
+        "injury",
+        "drive",
+        "projection-update",
+        "status"
+      ]
+    },
+    "affectedPlayers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "playerId",
+          "team"
+        ],
+        "properties": {
+          "playerId": {
+            "$ref": "#/components/schemas/UUID"
+          },
+          "team": {
+            "type": "string"
+          },
+          "impact": {
+            "type": "string",
+            "nullable": true
+          },
+          "pointsDelta": {
+            "type": "number",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "fantasyImplications": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "provenance": {
+      "$ref": "#/components/schemas/Provenance"
+    },
+    "links": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "format": "uri"
+      },
+      "nullable": true
+    }
+  },
+  "additionalProperties": false
+}

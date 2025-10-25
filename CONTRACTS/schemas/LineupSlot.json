@@ -1,0 +1,38 @@
+{
+  "type": "object",
+  "required": [
+    "slot",
+    "player",
+    "projected"
+  ],
+  "properties": {
+    "slot": {
+      "type": "string"
+    },
+    "player": {
+      "$ref": "#/components/schemas/PlayerSummary"
+    },
+    "projected": {
+      "$ref": "#/components/schemas/ProjectionSummary"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "starting",
+        "bench",
+        "locked",
+        "inactive"
+      ],
+      "default": "starting"
+    },
+    "actualPoints": {
+      "type": "number",
+      "nullable": true
+    },
+    "notes": {
+      "type": "string",
+      "nullable": true
+    }
+  },
+  "additionalProperties": false
+}

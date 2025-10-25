@@ -1,0 +1,50 @@
+{
+  "type": "object",
+  "required": [
+    "provider",
+    "status",
+    "scopes",
+    "linkedAt",
+    "needsReauth"
+  ],
+  "properties": {
+    "provider": {
+      "$ref": "#/components/schemas/ProviderId"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "linked",
+        "pending",
+        "error"
+      ]
+    },
+    "scopes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "linkedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "lastSyncAt": {
+      "type": "string",
+      "format": "date-time",
+      "nullable": true
+    },
+    "needsReauth": {
+      "type": "boolean"
+    },
+    "errorCode": {
+      "type": "string",
+      "nullable": true
+    },
+    "errorMessage": {
+      "type": "string",
+      "nullable": true
+    }
+  },
+  "additionalProperties": false
+}

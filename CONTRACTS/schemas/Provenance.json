@@ -1,0 +1,31 @@
+{
+  "type": "object",
+  "required": [
+    "source",
+    "asOf"
+  ],
+  "properties": {
+    "source": {
+      "type": "string",
+      "description": "Data source or model name."
+    },
+    "asOf": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp the data was computed."
+    },
+    "modelVersion": {
+      "type": "string",
+      "nullable": true,
+      "description": "Optional model or dataset version."
+    },
+    "notes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "nullable": true
+    }
+  },
+  "additionalProperties": false
+}

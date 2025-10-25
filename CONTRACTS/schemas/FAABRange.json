@@ -1,0 +1,20 @@
+{
+  "type": "object",
+  "required": [
+    "low",
+    "medium",
+    "high"
+  ],
+  "properties": {
+    "low": {
+      "type": "number"
+    },
+    "medium": {
+      "type": "number"
+    },
+    "high": {
+      "type": "number"
+    }
+  },
+  "additionalProperties": false
+}

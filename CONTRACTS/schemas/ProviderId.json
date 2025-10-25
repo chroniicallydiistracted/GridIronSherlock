@@ -1,0 +1,10 @@
+{
+  "type": "string",
+  "enum": [
+    "espn",
+    "yahoo",
+    "sleeper",
+    "nfl"
+  ],
+  "description": "Supported fantasy provider identifier."
+}
