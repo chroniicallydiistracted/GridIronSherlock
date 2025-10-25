@@ -1,0 +1,12 @@
+{
+  "name": "gridiron-web-smoke",
+  "private": true,
+  "scripts": {
+    "lint": "echo \"no lint configured\"",
+    "type": "tsc --noEmit",
+    "test": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "5.4.5"
+  }
+}
