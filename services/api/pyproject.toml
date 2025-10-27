@@ -42,3 +42,6 @@ packages = [
     "services.api.app.db",
 ]
 include-package-data = true
+
+[tool.setuptools.package-data]
+"services.api.app.contracts" = ["openapi.yaml"]

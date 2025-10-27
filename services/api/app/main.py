@@ -17,6 +17,7 @@ from starlette.exceptions import HTTPException as StarletteHTTPException
 from .config import settings
 from .middleware import LoggingMiddleware, RateLimitStubMiddleware, RequestIDMiddleware
 from .routers import accounts, leagues, live, players, projections, refresh, teams, trades, waivers
+from .contracts import openapi_path as embedded_contract_path
 
 logger = logging.getLogger("gridiron.api")
 
@@ -32,9 +33,15 @@ def _contract_path() -> Path:
 
     dir_override = os.getenv("CONTRACTS_DIR")
     if dir_override:
-        candidate = Path(dir_override) / "openapi.yaml"
+        candidate = Path(dir_override)
+        if candidate.is_dir():
+            candidate = candidate / "openapi.yaml"
         if candidate.exists():
             return candidate
+
+    embedded_candidate = embedded_contract_path()
+    if embedded_candidate.exists():
+        return embedded_candidate
 
     repo_candidate = Path(__file__).resolve().parents[3] / "CONTRACTS" / "openapi.yaml"
     if repo_candidate.exists():

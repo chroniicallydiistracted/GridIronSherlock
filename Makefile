@@ -151,6 +151,7 @@ generate:
 		rm -f tsconfig.esm.json tsconfig.cjs.json
 		cd - >/dev/null
 	fi
+	cp CONTRACTS/openapi.yaml services/api/app/contracts/openapi.yaml
 	@echo "SDKs generated under packages/sdk/ (TypeScript dist built)"
 
 fmt:
@@ -169,57 +170,67 @@ fmt:
 	@echo "fmt complete"
 
 lint: maybe-generate
-	if [ -d apps/web ]; then
-		(
-			cd apps/web
-			(npm run lint --silent || true) || (command -v npx >/dev/null 2>&1 && ls .eslintrc* >/dev/null 2>&1 && npx eslint . || true)
-		)
+	if [ -d apps/web ]; then \
+		( \
+			cd apps/web; \
+			if npm run -s lint; then :; \
+			elif command -v npx >/dev/null 2>&1 && ls .eslintrc* >/dev/null 2>&1; then npx eslint .; \
+			else echo 'no web linter configured' >&2; exit 2; \
+			fi \
+		); status=$$?; if [ $$status -ne 0 ]; then exit $$status; fi; \
 	fi
-	if [ -d services/api ]; then
-		(
-			cd services/api
+	if [ -d services/api ]; then \
+		( \
+			cd services/api; \
 			if command -v ruff >/dev/null 2>&1; then \
-				if ruff --help 2>/dev/null | grep -q "[[:space:]]check[[:space:]]"; then \
-					ruff check . || true; \
-				else \
-					ruff . || true; \
+				if ruff --help 2>/dev/null | grep -q "[[:space:]]check[[:space:]]"; then ruff check .; \
+				else ruff .; \
 				fi; \
-			elif command -v flake8 >/dev/null 2>&1; then \
-				flake8 . || true; \
-			else \
-				echo "no python linter configured"; \
-			fi
-		)
+			elif command -v flake8 >/dev/null 2>&1; then flake8 .; \
+			else echo 'no python linter configured' >&2; exit 2; \
+			fi \
+		); status=$$?; if [ $$status -ne 0 ]; then exit $$status; fi; \
 	fi
 	@echo "lint complete"
 
 type: maybe-generate
-	if [ -d apps/web ] && [ -f apps/web/tsconfig.json ]; then
-		(
-			cd apps/web
-			(npm run type --silent || true) || (command -v npx >/dev/null 2>&1 && npx tsc --noEmit || true)
-		)
+	if [ -d apps/web ] && [ -f apps/web/tsconfig.json ]; then \
+		( \
+			cd apps/web; \
+			if npm run -s type; then :; \
+			elif command -v npx >/dev/null 2>&1; then npx tsc --noEmit; \
+			else echo 'TypeScript not available for web type checks' >&2; exit 2; \
+			fi \
+		); status=$$?; if [ $$status -ne 0 ]; then exit $$status; fi; \
+	else \
+		echo 'no web tsconfig.json; skipping web type checks' >&2; \
 	fi
 	@echo "type checks done"
 
 test: maybe-generate
-	echo "Running backend tests"
-	if [ -d services/api ]; then
-		(
-			cd services/api
-			if command -v pytest >/dev/null 2>&1; then pytest -q --maxfail=1; else echo "pytest not installed, skipping"; fi
-		)
+	@echo "Running backend tests"
+	if [ -d services/api ]; then \
+		( \
+			cd services/api; \
+			if command -v pytest >/dev/null 2>&1; then pytest -q --maxfail=1; \
+			else echo 'pytest is required; run make setup to install dev deps' >&2; exit 2; \
+			fi \
+		); status=$$?; if [ $$status -ne 0 ]; then exit $$status; fi; \
 	fi
-	echo "Running frontend tests"
-	if [ -d apps/web ] && [ -f apps/web/package.json ]; then
-		(
-			cd apps/web
-			(npm test --silent || echo "frontend tests skipped")
-		)
+	@echo "Running frontend tests"
+	if [ -d apps/web ] && [ -f apps/web/package.json ]; then \
+		( \
+			cd apps/web; \
+			if node -e "const p=require('./package.json');process.exit(p.scripts&&p.scripts.test?0:1)"; then npm test --silent; \
+			else echo 'no frontend test script' >&2; \
+			fi \
+		); status=$$?; if [ $$status -ne 0 ]; then exit $$status; fi; \
 	fi
-	echo "Running contract tests"
-	if [ -d tests/contracts ]; then
-		if command -v pytest >/dev/null 2>&1; then pytest -q tests/contracts; else echo "pytest not installed, skipping contracts"; fi
+	@echo "Running contract tests"
+	if [ -d tests/contracts ]; then \
+		if command -v pytest >/dev/null 2>&1; then pytest -q tests/contracts; \
+		else echo 'pytest is required for contract tests; run make setup' >&2; exit 2; \
+		fi; \
 	fi
 	@echo "all tests completed"
 

@@ -1,6 +1,7 @@
 # Local env and secrets
 .env
 .env.local
+.env.prod
 .secrets/
 
 # Python

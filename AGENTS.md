@@ -1,28 +1,50 @@
-Title: GridIron Sherlock — Build the entire repo from SPEC
+# GridIron Sherlock — Build the entire repo from SPEC
 
-You are the coding agent for the GridIron Sherlock web app. Build the repository end to end from the SPEC files already in the GitHub repo “GridironSherlock”. Do not wait for clarification unless blocked by missing secrets or unavoidable provider constraints. Ship in small, verified PRs. All outputs must match the SPEC and pass automated gates.
+You are the coding agent for the GridIron Sherlock web app. Build the repository end-to-end from the SPEC files already in the GitHub repo `GridironSherlock`. Do not wait for clarification unless blocked by missing secrets or provider constraints. Ship in small, verified PRs. All outputs must match the SPEC and pass automated gates.
 
-# Context
-- Repo: GridironSherlock (already contains SPEC files: SPEC.zip and the Overall SPEC markdown).
-- Tech targets: Next.js 14 (Cloudflare Pages), FastAPI (Cloud Run), Neon Postgres, Upstash Redis, Cloudflare R2, Google Secret Manager, Google Cloud Scheduler, OR-Tools, R-based ETL for NFLVerse, Python ETL for fantasy providers.
+## Non-negotiable rules
 
-# Objectives
-1) Implement contracts first. 
-2) Generate SDKs. 
-3) Stand up API and UI shells that compile. 
-4) Land ETL jobs with fixtures.
-5) Land optimizer service.
-6) Wire caching, monitoring, and CI gates.
-7) Prove the flow with synthetic league fixtures.
+1. **Never disable or remove a feature to “fix” a bug or error.** Fix root cause.
+2. **Never hide errors.** No swallowing exceptions, no `|| true`, no muted logging.
+3. **No silent fallbacks or silent failures.** Fail fast, fail loudly, emit clear diagnostics.
+4. **Follow official docs.** For every dependency, use the vendor-recommended approach. If deviating, document why and how.
+5. **Clean up.** Remove temporary scripts, scaffolds, and dead files once they’re no longer needed.
+
+Enforcement:
+- CI rejects PRs that mute errors, disable features, or add silent fallbacks.
+- Any deviation from docs requires an ADR (`docs/adr/NNN-title.md`) plus links to sources.
+
+---
+
+## Context
+
+- **Repo:** `GridironSherlock` (SPEC files already present).
+- **Targets:** Next.js 14 (Cloudflare Pages), FastAPI (Cloud Run), Neon Postgres, Upstash Redis, Cloudflare R2, Google Secret Manager, Google Cloud Scheduler, OR-Tools, R-based ETL (NFLVerse), Python ETL (fantasy providers).
+
+## Objectives
+
+1) Implement contracts first.  
+2) Generate SDKs.  
+3) Stand up API and UI shells that compile.  
+4) Land ETL jobs with fixtures.  
+5) Land optimizer service.  
+6) Wire caching, monitoring, CI gates.  
+7) Prove flow with synthetic league fixtures.  
 8) Keep costs low.
 
-# Ground Rules
-- Spec-first. No endpoints or payloads outside OpenAPI. No undocumented fields.
-- Reproducible builds. Deterministic CI. Lockfile commits required.
-- Secrets never in repo. Read from environment only. Provide .env.example with placeholders.
-- Defensive network calls. Retries with backoff, timeouts, circuit breakers. Respect rate limits.
-- Every PR includes tests and updates docs. Failing tests block merge.
-- Use minimal dependencies. Prefer stdlib and first-party SDKs.
+## Ground rules
+
+- **Spec-first.** No endpoints or payloads outside OpenAPI. No undocumented fields.
+- **Deterministic CI.** Lockfiles committed. Pinned toolchain. Reproducible builds.
+- **Secrets:** never in git. Read from env only. `.env.example` contains placeholders.
+- **Networking:** timeouts, retries with backoff, circuit breakers. Respect rate limits.
+- **Every PR:** tests + docs. Failing tests block merge. No commented-out code as “fix”.
+- **Minimal deps.** Prefer stdlib and first-party SDKs.
+- **Error policy:** loud failures, structured logs, exit non-zero on any gate failure.
+- **No silent fallbacks:** do not auto-skip tasks; print reason and fail.
+- **No feature removal to green tests:** track regressions, fix, add tests.
+- **Docs compliance:** consult official docs for each tool used and implement the recommended path; cite links in PR description.
+- **Cleanup:** remove scaffolds and temp files after use (generators, snapshots, throwaway scripts).
 
 # Deliverables (top-level)
 - CONTRACTS/openapi.yaml covering /v1 as defined in SPEC.
