@@ -45,6 +45,19 @@ Enforcement:
 - **No feature removal to green tests:** track regressions, fix, add tests.
 - **Docs compliance:** consult official docs for each tool used and implement the recommended path; cite links in PR description.
 - **Cleanup:** remove scaffolds and temp files after use (generators, snapshots, throwaway scripts).
+## Ground rules
+
+- **Spec-first.** No endpoints or payloads outside OpenAPI. No undocumented fields.
+- **Deterministic CI.** Lockfiles committed. Pinned toolchain. Reproducible builds.
+- **Secrets:** never in git. Read from env only. `.env.example` contains placeholders.
+- **Networking:** timeouts, retries with backoff, circuit breakers. Respect rate limits.
+- **Every PR:** tests + docs. Failing tests block merge. No commented-out code as “fix”.
+- **Minimal deps.** Prefer stdlib and first-party SDKs.
+- **Error policy:** loud failures, structured logs, exit non-zero on any gate failure.
+- **No silent fallbacks:** do not auto-skip tasks; print reason and fail.
+- **No feature removal to green tests:** track regressions, fix, add tests.
+- **Docs compliance:** consult official docs for each tool used and implement the recommended path; cite links in PR description.
+- **Cleanup:** remove scaffolds and temp files after use (generators, snapshots, throwaway scripts).
 
 # Deliverables (top-level)
 - CONTRACTS/openapi.yaml covering /v1 as defined in SPEC.
