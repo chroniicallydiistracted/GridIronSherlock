@@ -2,11 +2,14 @@
   "name": "gridiron-web-smoke",
   "private": true,
   "scripts": {
-    "lint": "echo \"no lint configured\"",
+    "lint": "eslint --ext .ts,.tsx . --no-error-on-unmatched-pattern",
     "type": "tsc --noEmit",
     "test": "tsc --noEmit"
   },
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "7.18.0",
+    "@typescript-eslint/parser": "7.18.0",
+    "eslint": "8.57.1",
     "typescript": "5.4.5"
   }
 }

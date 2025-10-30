@@ -22,7 +22,7 @@ GridIron Sherlock is built on a modern, scalable, and serverless architecture:
 *   **Database:** [Neon Postgres](https://neon.tech/)
 *   **Cache & Queue:** [Upstash Redis](https://upstash.com/)
 *   **Data & Models:** [Cloudflare R2](https://www.cloudflare.com/products/r2/) for data artifacts and machine learning models.
-*   **Data Source:** Primarily powered by the [nflverse](https://nflverse.nflverse.com/) data.
+*   **Data Source:** Primarily powered by the [nflverse](https://nflverse.nflverse.com/) data. as well as PyESPN python scripter.
 
 ```mermaid
 flowchart LR

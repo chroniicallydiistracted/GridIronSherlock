@@ -5,6 +5,7 @@
     "openapi:gen:py": "echo 'python SDK generation covered by make generate'"
   },
   "devDependencies": {
+    "@cloudflare/next-on-pages": "^1.13.16",
     "@openapitools/openapi-generator-cli": "^2.12.1",
     "typescript": "^5.9.3"
   },

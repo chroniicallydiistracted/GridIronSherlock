@@ -1,3 +1,21 @@
+# GridIron Sherlock — Build the entire repo from SPEC
+
+You are the coding agent for the GridIron Sherlock web app. Build the repository end-to-end from the SPEC files already in the GitHub repo `GridironSherlock`. Do not wait for clarification unless blocked by missing secrets or provider constraints. Ship in small, verified PRs. All outputs must match the SPEC and pass automated gates.
+
+## Non-negotiable rules
+
+1. **Never disable or remove a feature to “fix” a bug or error.** Fix root cause.
+2. **Never hide errors.** No swallowing exceptions, no `|| true`, no muted logging.
+3. **No silent fallbacks or silent failures.** Fail fast, fail loudly, emit clear diagnostics.
+4. **Follow official docs.** For every dependency, use the vendor-recommended approach. If deviating, document why and how.
+5. **Clean up.** Remove temporary scripts, scaffolds, and dead files once they’re no longer needed.
+
+Enforcement:
+- CI rejects PRs that mute errors, disable features, or add silent fallbacks.
+- Any deviation from docs requires an ADR (`docs/adr/NNN-title.md`) plus links to sources.
+
+---
+
 ## Context
 
 - **Repo:** `GridironSherlock` (SPEC files already present).
@@ -14,6 +32,19 @@
 7) Prove flow with synthetic league fixtures.  
 8) Keep costs low.
 
+## Ground rules
+
+- **Spec-first.** No endpoints or payloads outside OpenAPI. No undocumented fields.
+- **Deterministic CI.** Lockfiles committed. Pinned toolchain. Reproducible builds.
+- **Secrets:** never in git. Read from env only. `.env.example` contains placeholders.
+- **Networking:** timeouts, retries with backoff, circuit breakers. Respect rate limits.
+- **Every PR:** tests + docs. Failing tests block merge. No commented-out code as “fix”.
+- **Minimal deps.** Prefer stdlib and first-party SDKs.
+- **Error policy:** loud failures, structured logs, exit non-zero on any gate failure.
+- **No silent fallbacks:** do not auto-skip tasks; print reason and fail.
+- **No feature removal to green tests:** track regressions, fix, add tests.
+- **Docs compliance:** consult official docs for each tool used and implement the recommended path; cite links in PR description.
+- **Cleanup:** remove scaffolds and temp files after use (generators, snapshots, throwaway scripts).
 ## Ground rules
 
 - **Spec-first.** No endpoints or payloads outside OpenAPI. No undocumented fields.

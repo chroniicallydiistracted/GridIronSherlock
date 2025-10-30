@@ -2,6 +2,7 @@
 .env
 .env.prod
 .env.local
+.env.prod
 .secrets/
 
 # Python
@@ -27,3 +28,6 @@ tmp/*
 *.log
 .vscode/
 .idea/
+
+# Python build artifacts
+*.egg-info/
